@@ -80,3 +80,17 @@
 
 (f 3)
 (f-rec 3)
+
+; Excercise 1.12
+; Assumes r and c are within bounds
+; of a pascal's triangle.
+; r = row
+; c = column
+(define (pascal r c)
+  (if (or (= r 1) (= c 1) (= r c))
+    1
+    (+ (pascal (- r 1) (- c 1))
+       (pascal (- r 1) c))
+  )
+)
+(pascal 5 2)
