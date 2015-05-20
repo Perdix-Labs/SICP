@@ -115,3 +115,23 @@
 
 (fast-exp 3 3)
 (fast-exp 3 4)
+
+; Exercise 1.17
+; Note: solved the 1.17 as is was for 1.18 solution.
+(define (fast-mult a b)
+  (mult-iter a b 0)
+)
+
+(define (mult-iter a b product)
+  (cond ((= b 0) product)
+        ((even? b) (mult-iter (double a) (halve b) product))
+        (else (mult-iter a (- b 1) (+ product a)))
+  )
+)
+
+; Assumes previously defined by language
+(define (halve x) (/ x 2))
+(define (double x) (+ x x))
+
+(fast-mult 10 2)
+(fast-mult 5 25)
