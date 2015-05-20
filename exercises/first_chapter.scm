@@ -135,3 +135,39 @@
 
 (fast-mult 10 2)
 (fast-mult 5 25)
+
+; Exercise 1.19
+; Here's how I solved the problem http://imgur.com/a/VYHZ3
+(define (fib n)
+  (fib-iter 1 0 0 1 n))
+
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+        ((even? count)
+         (fib-iter a
+                   b
+                   (compute-p-prime p q)
+                   (compute-q-prime p q)
+                   (/ count 2)))
+         (else (fib-iter (+ (* b q) (* a q) (* a p))
+                         (+ (* b p) (* a q))
+                         p
+                         q
+                         (- count 1))))
+)
+
+(define (compute-p-prime p q)
+  (+ (* q q) (* p p)))
+
+(define (compute-q-prime p q)
+  (+ (* 2 p q) (* q q)))
+
+(fib 5)
+(fib 8)
+(fib 20)
+(fib 300)
+(fib 5000)
+(fib 10000)
+(fib 100000)
+(fib 1000000)
+(fib 10000000) ; Got a bit excited
