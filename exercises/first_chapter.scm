@@ -58,7 +58,7 @@
 (fib 4)
 (fib 5)
 
-; Excercise 1.11
+; Exercise 1.11
 ; Recursive Process
 (define (f-rec n)
   (if (< n 3)
@@ -81,7 +81,7 @@
 (f 3)
 (f-rec 3)
 
-; Excercise 1.12
+; Exercise 1.12
 ; Assumes r and c are within bounds
 ; of a pascal's triangle.
 ; r = row
@@ -94,3 +94,24 @@
   )
 )
 (pascal 5 2)
+
+; Exercise 1.16
+(define (fast-exp b n)
+  (iter b n 1)
+)
+
+(define (iter b n a)
+  (cond ((= n 0) a)
+        ((even? n) (iter (square b) (/ n 2) a))
+        (else (iter b (- n 1) (* a b)))
+  )
+)
+
+(define (square x) (* x x))
+
+(define (even? n)
+  (= (remainder n 2) 0)
+)
+
+(fast-exp 3 3)
+(fast-exp 3 4)
