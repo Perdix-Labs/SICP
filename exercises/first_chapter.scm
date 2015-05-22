@@ -188,3 +188,41 @@
 (smallest-divisor 199)
 (smallest-divisor 1999)
 (smallest-divisor 19999)
+
+; Exercise 1.22
+(define (time-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (runtime)))
+(define (start-prime-test n start-time)
+  (if (prime? n)
+    (report-prime (- (runtime) start-time))
+    (report-prime "no prime")))
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
+; runtime is not defined by default on racket
+(define (runtime) (current-milliseconds))
+
+(define (search-for-primes startingFrom)
+  ; get the 3 smallest primes greater than startingFrom
+  (n-smallest-primes (+ startingFrom 1) 3))
+(define (n-smallest-primes a count)
+  (cond ((= count 0) 0)
+        ((even? a)
+         (n-smallest-primes (+ 1 a) count))
+        ((prime? a)
+         (time-prime-test a)
+         (n-smallest-primes (+ 2 a) (- count 1)))
+        (else (n-smallest-primes (+ 2 a) count))
+  )
+)
+
+(search-for-primes 1000)
+(search-for-primes 10000)
+(search-for-primes 100000)
+(search-for-primes 1000000)
+; try bigger data, difference of time is not appreciated
+(search-for-primes 1000000000)
+(search-for-primes 10000000000)
+(search-for-primes 100000000000)
