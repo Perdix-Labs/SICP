@@ -253,3 +253,19 @@
 (define (cube x) (* x x x))
 
 (simpson cube 0 1 1000)
+
+; Exercise 1.30
+(define (sum term a next b)
+  (define (iter a result)
+    (if (> a b)
+      result
+      (iter (next a) (+ result (term a)))
+    )
+  )
+  (iter a 0)
+)
+; Testing
+(define (identity x) x)
+(define (inc x) (+ x 1))
+; result of sum from 1 to 1000 must be 500500
+(sum identity 1 inc 1000)
