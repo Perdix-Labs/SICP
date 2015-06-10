@@ -314,3 +314,32 @@
 )
 
 (product-rec identity 1 inc 10)
+
+; Exercise 1.32
+(define (accumulate combiner null-value term a next b)
+  (if (> a b)
+    null-value
+    (combiner (term a)
+              (accumulate combiner null-value term (next a) next b))
+  )
+)
+
+(define (prod-combiner x y) (* x y))
+
+(define (sum-combiner x y) (+ x y))
+
+(accumulate prod-combiner 1 identity 1 inc 10)
+(accumulate sum-combiner 0 identity 1 inc 10)
+
+(define (accumulate-iter combiner null-value term a next b)
+  (define (iter a result)
+    (if (> a b)
+      result
+      (iter (next a) (combiner result (term a)))
+    )
+  )
+  (iter a null-value)
+)
+
+(accumulate-iter prod-combiner 1 identity 1 inc 10)
+(accumulate-iter sum-combiner 0 identity 1 inc 10)
