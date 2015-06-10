@@ -269,3 +269,48 @@
 (define (inc x) (+ x 1))
 ; result of sum from 1 to 1000 must be 500500
 (sum identity 1 inc 1000)
+
+; Exercise 1.31
+(define (product-iter term a next b)
+  (define (iter a result)
+    (if (> a b)
+      result
+      (iter (next a) (* result (term a)))
+    )
+  )
+  (iter a 1)
+)
+
+(product-iter identity 1 inc 10)
+
+(define (factorial x)
+  (product-iter identity 1 inc x)
+)
+
+(factorial 4)
+
+(define (approximate-pi n)
+  (define (term a)
+    (if (even? a)
+      (/ (+ a 2) (+ a 1))
+      (/ (+ a 1) (+ a 2))
+    )
+  )
+  (define (next a) (+ a 1))
+  (* (product-iter term 1 next n)
+     4.0 ; convert the int division to float
+  )
+)
+
+(approximate-pi 10)
+(approximate-pi 1000)
+
+(define (product-rec term a next b)
+  (if (> a b)
+    1
+    (* (term a)
+       (product-rec term (next a) next b))
+  )
+)
+
+(product-rec identity 1 inc 10)
