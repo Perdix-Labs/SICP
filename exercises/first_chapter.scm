@@ -324,12 +324,8 @@
   )
 )
 
-(define (prod-combiner x y) (* x y))
-
-(define (sum-combiner x y) (+ x y))
-
-(accumulate prod-combiner 1 identity 1 inc 10)
-(accumulate sum-combiner 0 identity 1 inc 10)
+(accumulate * 1 identity 1 inc 10)
+(accumulate + 0 identity 1 inc 10)
 
 (define (accumulate-iter combiner null-value term a next b)
   (define (iter a result)
@@ -341,5 +337,35 @@
   (iter a null-value)
 )
 
-(accumulate-iter prod-combiner 1 identity 1 inc 10)
-(accumulate-iter sum-combiner 0 identity 1 inc 10)
+(accumulate-iter * 1 identity 1 inc 10)
+(accumulate-iter + 0 identity 1 inc 10)
+
+; Exercise 1.33
+(define (filtered-accumulate filterBy combiner null-value term a next b)
+  (define (iter a result)
+    (if (> a b)
+      result
+      (if (filterBy a)
+        (iter (next a) (combiner result (term a)))
+        (iter (next a) result)
+      )
+    )
+  )
+  (iter a null-value)
+)
+
+(filtered-accumulate prime? + 0 square 1 inc 5)
+
+(define (relative-primes? x n)
+  (= (gcd x n) 1)
+)
+
+(define (product-of-relative-primes n)
+  (define (filter-relative-primes x)
+    (relative-primes? x n))
+  (filtered-accumulate filter-relative-primes * 1 identity 1 inc n)
+)
+
+(product-of-relative-primes 5)
+(product-of-relative-primes 10)
+(product-of-relative-primes 100)
