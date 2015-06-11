@@ -396,3 +396,32 @@
 ; With average damping
 (define (average x y) (/ (+ x y) 2))
 (fixed-point (lambda (x) (average x (/ (log 1000) (log x)))) 2)
+
+; Exercise 1.37
+(define (cont-frac n d k)
+  (define (aux i)
+    (if (> i k)
+      0
+      (/ (n i) (+ (d i) (aux (+ i 1))) )
+    )
+  )
+  (aux 1)
+)
+
+(define (cont-frac-iter n d k)
+  ; works backwards from k to 0
+  (define (iter i result)
+    (if (= i 0)
+      result
+      (iter (- i 1) (/ (n i) (+ (d i) result)))
+    )
+  )
+  (iter k 0)
+)
+
+(cont-frac (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           11)
+(cont-frac-iter (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           11)
