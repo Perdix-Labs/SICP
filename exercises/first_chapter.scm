@@ -476,3 +476,10 @@
   )
 )
 (newtons-method (cubic 1 2 3) 1)
+
+;Exercise 1.41
+(define (double f)
+  (lambda (x) (f (f x)))
+)
+((double inc) 12)
+(((double (double double)) inc) 5) ; Result 21
