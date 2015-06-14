@@ -451,3 +451,28 @@
              k)
 )
 (tan-cf 100.0 500)
+
+; Newtons Method
+(define (deriv g)
+  (lambda (x)
+    (/ (- (g (+ x dx)) (g x))
+       dx))
+)
+(define dx 0.00001)
+(define (newtons-transform g)
+  (lambda (x)
+    (- x (/ (g x) ((deriv g) x))))
+)
+(define (newtons-method g guess)
+  (fixed-point (newtons-transform g) guess))
+
+; Exercise 1.40
+(define (cubic a b c)
+  (lambda (x)
+    (+ (* x x x)
+       (* a x x)
+       (* b x)
+       c)
+  )
+)
+(newtons-method (cubic 1 2 3) 1)
