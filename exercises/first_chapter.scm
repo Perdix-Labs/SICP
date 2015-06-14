@@ -487,3 +487,12 @@
 ;Exercise 1.42
 (define (compose f g) (lambda(x) (f (g x))))
 ((compose square inc) 6) ; Result 49
+
+; Exercise 1.43
+(define (repeated f n)
+  (if (= n 1)
+    f
+    (repeated (compose f f) (- n 1))
+  )
+)
+((repeated square 2) 5)
