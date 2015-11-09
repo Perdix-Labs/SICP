@@ -1,5 +1,5 @@
 ; Represent Rational Numbers
-(define (make-rat n d)
+(define (make-rat-help n d)
   (let ((g (gcd n d)))
     (cons (/ n g) (/ d g))))
 
@@ -46,3 +46,10 @@
 (print-rat (add-rat one-half one-third))
 (print-rat (mul-rat one-half one-third))
 (print-rat (add-rat one-third one-third))
+
+;Exercise 2.1
+(define (make-rat n d)
+  (if (or (and (negative? n) (negative? d))
+          (negative? d))
+    (make-rat-help (* -1 n) (* -1 d))
+    (make-rat-help n d)))
