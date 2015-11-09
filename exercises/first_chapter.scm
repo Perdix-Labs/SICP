@@ -496,3 +496,15 @@
   )
 )
 ((repeated square 2) 5)
+
+; Exercise 1.44
+(define (smooth f)
+  (lambda (x)
+    (/
+      (+ (f x) (f (- x dx) (f (+ x dx))))
+      3
+    )
+  )
+)
+(define (smooth-n f n x)
+  ((repeated (smooth f) n) x)
