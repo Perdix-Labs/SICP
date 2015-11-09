@@ -1,5 +1,7 @@
 ; Represent Rational Numbers
-(define (make-rat n d) (cons n d))
+(define (make-rat n d)
+  (let ((g (gcd n d)))
+    (cons (/ n g) (/ d g))))
 
 (define (numer x) (car x))
 
@@ -31,4 +33,16 @@
   (newline)
   (display (numer x))
   (display "/")
-  (display (denom x)))
+  (display (denom x))
+  (newline))
+
+; Test it
+(define one-half (make-rat 1 2))
+(print-rat one-half)
+
+(define one-third (make-rat 1 3))
+(print-rat one-third)
+
+(print-rat (add-rat one-half one-third))
+(print-rat (mul-rat one-half one-third))
+(print-rat (add-rat one-third one-third))
