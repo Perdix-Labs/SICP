@@ -221,3 +221,8 @@
 
 (define (upper-bound interval) (cdr interval))
 (define (lower-bound interval) (car interval))
+
+;Exercie 2.8
+(define (sub-interval x y)
+  (make-interval (abs (- (lower-bound x) (lower-bound y)))
+                 (abs (- (upper-bound x) (lower-bound y)))))
