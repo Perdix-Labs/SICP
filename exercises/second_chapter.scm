@@ -146,3 +146,14 @@
   (display "Area:")
   (display (area-rectangle rect))
   (newline))
+
+;Exercise 2.4
+;Procedural representations of cons, car and cdr.
+(define (cons-p x y)
+  (lambda (m) (m x y)))
+
+(define (car-p z)
+  (z (lambda (p q) p)))
+
+(define (cdr-p z)
+  (z (lambda (p q) q)))
