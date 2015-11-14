@@ -157,3 +157,25 @@
 
 (define (cdr-p z)
   (z (lambda (p q) q)))
+
+;Exercise 2.5
+;Represent pairs with numbers.
+;Solution: Iteratively divide first by two for car.
+;The remaining amount iteratively divide by 3.
+(define (cons-num a b)
+  (* (expt 2 a)
+     (expt 3 b)))
+
+(define (car-num c)
+  (define (car-rec value result)
+    (if (= (remainder value 2) 0)
+      (car-rec (/ value 2) (+ result 1))
+      result))
+  (car-rec c 0))
+
+(define (cdr-num c)
+  (define (cdr-rec value result)
+    (if (= (remainder value 3) 0)
+      (cdr-rec (/ value 3) (+ result 1))
+      result))
+  (cdr-rec (/ c (expt 2 (car-num c))) 0))
