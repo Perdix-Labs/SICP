@@ -179,3 +179,22 @@
       (cdr-rec (/ value 3) (+ result 1))
       result))
   (cdr-rec (/ c (expt 2 (car-num c))) 0))
+
+;Exercise 2.6
+(define zero (lambda (f) (lambda (x) x)))
+
+(define (add-1 n)
+  (lambda (f) (lambda (x) (f ((n f) x)))))
+
+(define one (lambda (f) (lambda (x) (f x))))
+
+(define two (lambda (f) (lambda (x) (f (f x)))))
+
+; Just as add-1 wraps the result of applying f n times
+; we wrap the result applying f m times to n f
+(define (plus m n)
+  (lambda (f) (lambda (x) ((m f) ((n f ) x)))))
+
+; test helper method
+(define (inc n)
+  (+ n 1))
