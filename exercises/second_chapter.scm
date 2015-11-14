@@ -93,3 +93,56 @@
 (define (test-midpoint-segment)
   (print-point (midpoint-segment
                  (make-segment (make-point 0 0) (make-point 10 0)))))
+
+;Exercise 2.3
+;Represent a Rectangle with a couple of pairs of segments,
+;Segments are stored in clocwise order starting from the top.
+(define (make-rectangle top-seg right-seg bot-seg left-seg)
+  (cons (cons top-seg right-seg) (cons bot-seg left-seg)))
+
+(define (first-half-rectangle rectangle)
+  (car rectangle))
+
+(define (last-half-rectangle rectangle)
+  (cdr rectangle))
+
+(define (top-rectangle rectangle)
+  (car (first-half-rectangle rectangle)))
+
+(define (right-rectangle rectangle)
+  (cdr (first-half-rectangle rectangle)))
+
+(define (bot-rectangle rectangle)
+  (car (last-half-rectangle rectangle)))
+
+(define (left-rectangle rectangle)
+  (cdr (last-half-rectangle rectangle)))
+
+(define (distance-segment segment)
+  (sqrt (+
+          (expt (- (x-point (end-segment segment)) (x-point (start-segment segment)))
+                2)
+          (expt (- (y-point (end-segment segment)) (y-point (start-segment segment)))
+                2)
+          )))
+
+(define (perimeter-rectangle rectangle)
+  (* (+ (distance-segment (top-rectangle rectangle))
+        (distance-segment (right-rectangle rectangle)))
+     2))
+
+(define (area-rectangle rectangle)
+  (* (distance-segment (top-rectangle rectangle))
+     (distance-segment (right-rectangle rectangle))))
+
+(define (test-perimeter-and-area)
+  (define rect (make-rectangle
+                 (make-segment (make-point 0 5) (make-point 10 5))
+                 (make-segment (make-point 10 5) (make-point 10 0))
+                 (make-segment (make-point 10 0) (make-point 0 0))
+                 (make-segment (make-point 0 0) (make-point 0 5))))
+  (display "Perimeter:")
+  (display (perimeter-rectangle rect))
+  (display "Area:")
+  (display (area-rectangle rect))
+  (newline))
