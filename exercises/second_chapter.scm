@@ -226,3 +226,14 @@
 (define (sub-interval x y)
   (make-interval (abs (- (lower-bound x) (lower-bound y)))
                  (abs (- (upper-bound x) (lower-bound y)))))
+
+;Exercise 2.9
+(define (width-interval x)
+  (/ (- (upper-bound x) (lower-bound x))
+     2))
+
+(define (width-sum a b)
+  (+ (width-interval a) (width-interval b)))
+
+(define (width-sub a b)
+  (abs (- (width-interval a) (width-interval b))))
