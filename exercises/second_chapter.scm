@@ -237,3 +237,11 @@
 
 (define (width-sub a b)
   (abs (- (width-interval a) (width-interval b))))
+
+;Exercise 2.10
+(define (div-interval-span-zero x y)
+  (if (= 0 (width-interval y))
+    (error "Width of denominator interval can't be zero.")
+    (mul-interval x
+                  (make-interval (/ 1.0 (upper-bound y))
+                                 (/ 1.0 (lower-bound y))))))
