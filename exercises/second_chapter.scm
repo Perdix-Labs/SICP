@@ -245,3 +245,9 @@
     (mul-interval x
                   (make-interval (/ 1.0 (upper-bound y))
                                  (/ 1.0 (lower-bound y))))))
+
+;Exercise 2.17
+(define (last-pair list1)
+        (if (= 1 (length list1))
+          (car list1)
+          (last-pair (cdr list1))))
