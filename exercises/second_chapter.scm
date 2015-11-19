@@ -287,3 +287,12 @@
           (else
             (apply same-parity-helper (cdr args)))))
   (apply same-parity-helper rest-args))
+
+; Exercise 2.21
+(define (square-list items)
+  (if (null? items)
+    null
+    (cons (* (car items) (car items)) (square-list (cdr items)))))
+
+(define (suquare-list items)
+  (map (lambda (x) (* x x)) items))
