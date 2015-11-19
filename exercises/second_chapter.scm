@@ -296,3 +296,19 @@
 
 (define (suquare-list items)
   (map (lambda (x) (* x x)) items))
+
+; Exercise 2.22
+; This square-list implementation doesn't work properly because
+; is appending with cons a list on the first element and then the
+; square result on the second element.
+; This logic generates a nested list as the answer.
+; ie: (((() . 1) . 4) . 9)
+(define (square-list items)
+  (define (square x) (* x x))
+  (define (iter things answer)
+    (if (null? things)
+      answer
+      (iter (cdr things)
+            (cons answer
+                  (square (car things))))))
+  (iter items null))
