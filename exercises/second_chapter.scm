@@ -312,3 +312,10 @@
             (cons answer
                   (square (car things))))))
   (iter items null))
+
+; Exercise 2.23
+(define (for-each proc list-arg)
+  (cond ((null? list-arg) true)
+        (else
+          (proc (car list-arg))
+          (for-each proc (cdr list-arg)))))
