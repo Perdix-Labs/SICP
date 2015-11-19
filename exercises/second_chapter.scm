@@ -275,3 +275,15 @@
 
 (define us-coins (list 50 25 10 5 1))
 (cc 100 us-coins) ; answer is 292
+
+; Exercise 2.20
+(define (same-parity x . rest-args)
+  (define (parity-fn x) (modulo x 2))
+  (define parity-of-x (parity-fn x))
+  (define (same-parity-helper . args)
+    (cond ((= 0 (length args)) null)
+          ((= parity-of-x (parity-fn (car args)))
+            (cons (car args) (apply same-parity-helper (cdr args))))
+          (else
+            (apply same-parity-helper (cdr args)))))
+  (apply same-parity-helper rest-args))
