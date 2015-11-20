@@ -328,3 +328,11 @@
                         (list (deep-reverse (car list1)))))
         (else
           (append (deep-reverse (cdr list1)) (list (car list1))))))
+
+;Exercise 2.28
+(define (fringe tree)
+  (cond ((null? tree) null)
+        ((not (pair? tree)) (list tree))
+        (else
+          (append (fringe (car tree))
+                  (fringe (cdr tree))))))
