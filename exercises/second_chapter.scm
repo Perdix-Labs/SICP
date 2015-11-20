@@ -319,3 +319,12 @@
         (else
           (proc (car list-arg))
           (for-each proc (cdr list-arg)))))
+
+;Exercise 2.27
+(define (deep-reverse list1)
+  (cond ((null? list1) null)
+        ((pair? (car list1))
+                (append (deep-reverse (cdr list1))
+                        (list (deep-reverse (car list1)))))
+        (else
+          (append (deep-reverse (cdr list1)) (list (car list1))))))
