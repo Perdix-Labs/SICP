@@ -356,11 +356,12 @@
 (define (branch-structure branch)
   (car (cdr branch)))
 
+(define (total-branch-weight branch)
+  (if (pair? (branch-structure branch))
+      (total-weight (branch-structure branch))
+      (branch-structure branch)))
+
 (define (total-weight mobile)
-  (define (total-branch-weight branch)
-    (if (pair? (branch-structure branch))
-        (total-weight (branch-structure branch))
-        (branch-structure branch)))
   (+ (total-branch-weight (left-branch mobile))
      (total-branch-weight (right-branch mobile))))
 
@@ -368,3 +369,19 @@
 (define child-branch (make-branch 0 4))
 (define mobile (make-mobile child-branch child-branch))
 (total-weight mobile)
+
+
+(define (branch-torque branch)
+  (* (branch-length branch)
+     (total-branch-weight branch)))
+
+(define (balanced-mobile? mobile)
+  (and (= (branch-torque (left-branch mobile))
+          (branch-torque (right-branch mobile)))
+       (balanced-branch? (left-branch mobile))
+       (balanced-branch? (right-branch mobile))))
+
+(define (balanced-branch? branch)
+  (if (pair? (branch-structure branch))
+      (balanced-mobile? (branch-structure branch))
+      true))
