@@ -336,3 +336,35 @@
         (else
           (append (fringe (car tree))
                   (fringe (cdr tree))))))
+
+;Exercise 2.29
+(define (make-mobile left right)
+  (list left right))
+
+(define (make-branch length structure)
+  (list length structure))
+
+(define (left-branch mobile)
+  (car mobile))
+
+(define (right-branch mobile)
+  (car (cdr mobile)))
+
+(define (branch-length branch)
+  (car branch))
+
+(define (branch-structure branch)
+  (car (cdr branch)))
+
+(define (total-weight mobile)
+  (define (total-branch-weight branch)
+    (if (pair? (branch-structure branch))
+        (total-weight (branch-structure branch))
+        (branch-structure branch)))
+  (+ (total-branch-weight (left-branch mobile))
+     (total-branch-weight (right-branch mobile))))
+
+; Test
+(define child-branch (make-branch 0 4))
+(define mobile (make-mobile child-branch child-branch))
+(total-weight mobile)
