@@ -410,3 +410,18 @@
        tree))
 (define (square x) (* x x))
 (define (square-tree tree) (tree-map square tree))
+
+;Exercise 2.32
+;We have to prepend the first element from the set into
+;the rest of the subsets.
+;Example: (subsets (list 1 2))
+;First pass:
+;rest = '(() (2))
+;(append '(() (2)) ((1) (1 2))
+(define (subsets s)
+  (if (null? s)
+    (list null)
+    (let ((rest (subsets (cdr s))))
+      (append rest (map (lambda (x)
+                          (append (list (car s)) x))
+                        rest)))))
