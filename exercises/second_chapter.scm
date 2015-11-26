@@ -385,3 +385,18 @@
   (if (pair? (branch-structure branch))
       (balanced-mobile? (branch-structure branch))
       true))
+
+;Exercise 2.30
+(define (square-tree tree)
+  (cond ((null? tree) null)
+        ((pair? tree)
+         (cons (square-tree (car tree)) (square-tree (cdr tree))))
+        ((not (pair? tree))
+         (* tree tree))))
+
+(define (square-tree tree)
+  (map (lambda (sub-tree)
+         (if (pair? sub-tree)
+           (square-tree sub-tree)
+           (* sub-tree sub-tree)))
+       tree))
