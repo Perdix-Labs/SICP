@@ -425,3 +425,29 @@
       (append rest (map (lambda (x)
                           (append (list (car s)) x))
                         rest)))))
+
+;Sequence Operations
+(define (filter-c predicate sequence)
+  (cond ((null? sequence) null)
+        ((predicate (car sequence))
+         (cons (car sequence)
+               (filter-c predicate (cdr sequence)))
+         (else (filter-c predicate (cdr sqeuence))))))
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+    initial
+    (op (car sequence)
+        (accumulate op initial (cdr sequence)))))
+
+(define (enumerate-interval low high)
+  (if (> low high)
+    null
+    (cons low (enumerate-interval (+ low 1) high))))
+
+(define (enumerate-tree tree)
+  (cond ((null? tree) null)
+        ((not (pair? tree)) (list tree))
+        (else (append (enumerate-tree (car tree))
+                      (enumerate-tree (cdr tree))))))
+
