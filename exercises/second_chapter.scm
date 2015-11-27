@@ -497,3 +497,25 @@
     (map (lambda (m-row)
            (matrix-*-vector cols m-row))
          m)))
+
+;Exercise 2.38
+(define (fold-left-c op initial sequence)
+  (define (iter result rest)
+    (if (null? rest)
+      result
+      (iter (op result (car rest))
+            (cdr rest))))
+  (iter initial sequence))
+
+(define (fold-right-c op initial sequence)
+  (accumulate op initial sequence))
+
+(fold-right-c / 1 (list 1 2 3))
+(fold-left-c / 1 (list 1 2 3))
+(fold-right-c list null (list 1 2 3))
+(fold-left-c list null (list 1 2 3))
+; Any operation that has a commutative property should produce
+; the same result for fold-left and fold-right
+; Example:
+(fold-right-c + 0 (list 1 2 3))
+(fold-left-c + 0 (list 1 2 3))
