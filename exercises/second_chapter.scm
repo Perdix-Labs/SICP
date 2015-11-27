@@ -519,3 +519,10 @@
 ; Example:
 (fold-right-c + 0 (list 1 2 3))
 (fold-left-c + 0 (list 1 2 3))
+
+; Exercise 2.39
+(define (reverse-with-fold-right sequence)
+  (fold-right-c (lambda (x y) (append y (list x))) null sequence))
+
+(define (reverse-with-fold-left sequence)
+  (fold-left-c (lambda (x y) (append (list y) x)) null sequence))
