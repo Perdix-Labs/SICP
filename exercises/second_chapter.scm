@@ -451,3 +451,20 @@
         (else (append (enumerate-tree (car tree))
                       (enumerate-tree (cdr tree))))))
 
+;Exercise 2.33
+(define (map-c p sequence)
+  (accumulate (lambda (x y) (cons (p x) y)) null sequence))
+
+(define (append-c seq1 seq2)
+  (accumulate cons seq2 seq1))
+
+(define (length-c sequence)
+  (accumulate (lambda (x y) (+ 1 y)) 0 sequence))
+
+;Exercise 2.34
+(define (horner-eval x coefficient-sequence)
+  (accumulate (lambda (this-coeff higher-terms)
+                (+ this-coeff
+                   (* x higher-terms)))
+              0
+              coefficient-sequence))
