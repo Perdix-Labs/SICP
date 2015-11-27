@@ -479,3 +479,21 @@
     null
     (cons (accumulate op init (map car seqs))
           (accumulate-n op init (map cdr seqs)))))
+
+;Exercise 2.37
+(define (dot-product v w)
+  (accumulate + 0 (map * v w)))
+
+(define (matrix-*-vector m v)
+  (map (lambda (x)
+         (dot-product x v))
+       m))
+
+(define (transpose mat)
+  (accumulate-n cons null mat))
+
+(define (matrix-*-matrix m n)
+  (let ((cols (transpose n)))
+    (map (lambda (m-row)
+           (matrix-*-vector cols m-row))
+         m)))
