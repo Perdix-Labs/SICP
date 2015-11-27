@@ -472,3 +472,10 @@
 ;Exercise 2.35
 (define (count-leaves t)
   (accumulate + 0 (map (lambda (x) 1) (enumerate-tree t))))
+
+;Exercise 2.36
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+    null
+    (cons (accumulate op init (map car seqs))
+          (accumulate-n op init (map cdr seqs)))))
