@@ -431,8 +431,8 @@
   (cond ((null? sequence) null)
         ((predicate (car sequence))
          (cons (car sequence)
-               (filter-c predicate (cdr sequence)))
-         (else (filter-c predicate (cdr sqeuence))))))
+               (filter-c predicate (cdr sequence))))
+        (else (filter-c predicate (cdr sequence)))))
 
 (define (accumulate op initial sequence)
   (if (null? sequence)
@@ -526,3 +526,26 @@
 
 (define (reverse-with-fold-left sequence)
   (fold-left-c (lambda (x y) (append (list y) x)) null sequence))
+
+; Pre work for exercise 2.40
+(define (flatmap proc seq)
+  (accumulate append null (map proc seq)))
+
+; prime? is defined in the exercise 1.21
+(define (prime-sum? pair)
+  (prime? (+ (car pair) (cadr pair))))
+
+(define (make-pair-sum pair)
+  (list (car pair) (cadr pair) (+ (car pair)
+                                 (cadr pair))))
+; Exercise 2.40
+(define (unique-pairs n)
+  (flatmap (lambda (i)
+             (map (lambda (j)
+                    (list i j))
+                  (enumerate-interval 1 (- i 1))))
+           (enumerate-interval 1 n)))
+
+(define (prime-sum-pairs n)
+  (map make-pair-sum
+       (filter-c prime-sum? (unique-pairs n))))
