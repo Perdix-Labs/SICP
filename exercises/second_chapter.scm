@@ -549,3 +549,35 @@
 (define (prime-sum-pairs n)
   (map make-pair-sum
        (filter-c prime-sum? (unique-pairs n))))
+
+; procedure to generate permutations of a given set.
+(define (permutations s)
+  (if (null? s)
+    (list null)
+    (flatmap (lambda (x)
+               (map (lambda (p) (cons x p))
+                    (permutations (remove-c x s))))
+             s)))
+(define (remove-c item sequence)
+  (filter-c (lambda (x) (not (= x item)))
+            sequence))
+
+; Exercise 2.41
+; Generates ordered triplets from 1 to n.
+(define (ordered-triplets n)
+  (flatmap (lambda (i)
+             (flatmap (lambda (j)
+                    (map (lambda (k)
+                           (list i j k))
+                         (enumerate-interval 1 (- j 1))))
+                    (enumerate-interval 1 (- i 1))))
+             (enumerate-interval 1 n)))
+
+(define (make-triplet-sum triplet)
+  (append triplet (list (accumulate + 0 triplet))))
+
+; Definition using unique-triplets
+(define (ordered-triplet-sum n s)
+  (define (triplet-sum? triplet)
+    (= s (accumulate + 0 triplet)))
+  (map make-triplet-sum (filter-c triplet-sum? (ordered-triplets n))))
