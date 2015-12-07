@@ -675,3 +675,14 @@
 
 (define (edge2-frame frame)
  (cdr (cdr frame)))
+
+; Exercise 2.48
+(define (make-segment sx sy ex ey)
+  (list (make-vect sx sy)
+        (make-vect ex ey)))
+
+(define (start-segment segment)
+  (car segment))
+
+(define (end-segment segment)
+  (car (cdr segment)))
