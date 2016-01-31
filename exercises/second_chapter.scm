@@ -713,3 +713,31 @@
 (write-painter-to-svg (rotate90 (segments->painter wave)) "2.50-wave-rotate90.svg")
 (write-painter-to-svg (rotate180 (segments->painter wave)) "2.50-wave-rotate180.svg")
 (write-painter-to-svg (rotate270 (segments->painter wave)) "2.50-wave-rotate270.svg")
+
+; Exercise 2.51
+(define (below-direct painter1 painter2)
+  (let ((split-point (make-vect 0.0 0.5)))
+    (let ((paint-bottom
+            (transform-painter painter1
+                               (make-vect 0.0 0.0)
+                               (make-vect 1.0 0.0)
+                               split-point))
+          (paint-top
+            (transform-painter painter2
+                               split-point
+                               (make-vect 1.0 0.5)
+                               (make-vect 0.0 1.0))))
+      (lambda (frame)
+        (paint-bottom frame)
+        (paint-top frame)))))
+
+(write-painter-to-svg (below-direct (segments->painter diamond)
+                             (segments->painter x))
+                      "2.51-x-diamond-below-direct.svg")
+
+(define (below-indirect painter1 painter2)
+  (rotate90 (beside (rotate270 painter1) (rotate270 painter2))))
+
+(write-painter-to-svg (below-indirect (segments->painter diamond)
+                             (segments->painter x))
+                      "2.51-x-diamond-below-indirect.svg")
