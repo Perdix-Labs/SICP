@@ -695,3 +695,21 @@
 (write-painter-to-svg (segments->painter x) "2.49-x.svg")
 (write-painter-to-svg (segments->painter diamond) "2.49-diamond.svg")
 (write-painter-to-svg (segments->painter wave) "2.49-wave.svg")
+
+; Exercise 2.50
+(define (flip-horiz painter)
+  (transform-painter painter
+                     (make-vect 1.0 0.0) ; origin
+                     (make-vect 0.0 0.0) ; edge1
+                     (make-vect 1.0 1.0))) ; edge2
+
+(define (rotate180 painter)
+  (rotate90 (rotate90 painter)))
+
+(define (rotate270 painter)
+  (rotate90 (rotate180 painter)))
+
+(write-painter-to-svg (flip-horiz (segments->painter wave)) "2.50-wave-fip-horiz.svg")
+(write-painter-to-svg (rotate90 (segments->painter wave)) "2.50-wave-rotate90.svg")
+(write-painter-to-svg (rotate180 (segments->painter wave)) "2.50-wave-rotate180.svg")
+(write-painter-to-svg (rotate270 (segments->painter wave)) "2.50-wave-rotate270.svg")
