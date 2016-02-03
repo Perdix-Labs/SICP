@@ -741,3 +741,22 @@
 (write-painter-to-svg (below-indirect (segments->painter diamond)
                              (segments->painter x))
                       "2.51-x-diamond-below-indirect.svg")
+
+; Section 2.3 Symbolic Data
+
+(define (memq item x)
+  (cond ((null? x) #f)
+        ((eq? item (car x)) x)
+        (else (memq item (cdr x)))))
+
+; Exercise 2.54
+(define (equal? a b)
+  (cond ((and (symbol? a) (symbol? b))
+         (eq? a b))
+        ((and (number? a) (number? b))
+         (= a b))
+        ((and (pair? a) (pair? b))
+         (and (equal? (car a) (car b))
+              (equal? (cdr a) (cdr b))))
+        ((and (null? a) (null? b))
+         #t)))
