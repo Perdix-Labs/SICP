@@ -775,6 +775,12 @@
                          (deriv (multiplicand exp) var))
            (make-product (deriv (multiplier exp) var)
                          (multiplicand exp))))
+        ((exponentiation? exp)  ; Exercise 2.56
+         (make-product
+           (make-product (exponent exp)
+                         (make-exponentiation (base exp)
+                                              (- (exponent exp) 1)))
+           (deriv (base exp) var)))
         (else
           (error "unknown expression type -- DERIV" exp))))
 
@@ -821,3 +827,22 @@
 (define (multiplier p) (cadr p))
 
 (define (multiplicand p) (caddr p))
+
+; Exercise 2.56
+(define (exponentiation? x)
+  (and (pair? x)
+       (eq? (car x) '**)))
+
+(define (make-exponentiation base exponent)
+  (cond ((=number? exponent 0)
+         1)
+        ((=number? exponent 1)
+         base)
+        ((and (number? base) (number? exponent))
+         (exp base exponent))
+        (else
+          (list '** base exponent))))
+
+(define (base e) (cadr e))
+
+(define (exponent e) (caddr e))
