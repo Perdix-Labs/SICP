@@ -768,7 +768,7 @@
          (if (same-variable? exp var) 1 0))
         ((sum? exp)
          (make-sum (deriv (addend exp) var)
-                   (deriv (augent exp) var)))
+                   (deriv (augend exp) var)))
         ((product? exp)
          (make-sum
            (make-product (multiplier exp)
@@ -818,7 +818,10 @@
 
 (define (addend s) (cadr s))
 
-(define (augent s) (caddr s))
+(define (augend s) ; Moddified to add exercise 2.57
+  (if (null? (cdddr s))
+    (caddr s)
+    (cons '+ (cddr s))))
 
 (define (product? x)
   (and (pair? x)
@@ -826,7 +829,10 @@
 
 (define (multiplier p) (cadr p))
 
-(define (multiplicand p) (caddr p))
+(define (multiplicand p) ; Moddified to add exercise 2.57
+  (if (null? (cdddr p))
+    (caddr p)
+    (cons '* (cddr p))))
 
 ; Exercise 2.56
 (define (exponentiation? x)
