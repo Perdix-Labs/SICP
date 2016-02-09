@@ -883,3 +883,23 @@
         (else
           (cons (car set1)
                 (union-set (cdr set1) set2)))))
+
+; Exercise 2.60
+(define (element-of-set-with-dups? x set)
+  (element-of-set? x set)) ; Same as exercise 2.59
+
+(define (adjoin-set-with-dups x set)
+  (cons x set))
+
+(define (union-set-with-dups set1 set2)
+  (append set1 set2))
+
+(define (intersection-set-with-dups set1 set2)
+  (intersection-set set1 set2)) ; Same as exercise 2.59
+
+; element-of-set and intersection-set remain the same complexity O(n)
+; adjoin-set and union-set improve from O(n) to be O(1) since they
+; no longer need to check for duplicates before adding members or
+; appending sets. Thus this implementation would be preferable when
+; we don't mind too much about memory when repeating elements and
+; we have a lots of union and adjoin operations.
